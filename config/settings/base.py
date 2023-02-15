@@ -108,6 +108,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "estate_project.users",
     # Your stuff: custom apps go here
+    "properties.apps.PropertiesConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -314,8 +315,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 
-    'EXCEPTION_HANDLER':
-    'rest_framework_friendly_errors.handlers.friendly_exception_handler'
+
 }
 
 

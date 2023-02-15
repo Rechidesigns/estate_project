@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from estate_project.users.models import User
-from rest_framework_friendly_errors.mixins import FriendlyErrorMessagesMixin
 
 
 
@@ -19,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
 
-class Account_Creation ( FriendlyErrorMessagesMixin , serializers.ModelSerializer ):
+class Account_Creation (  serializers.ModelSerializer ):
     ACCOUNT_TYPE = (
         ('Landlord', _('Landlord')),
         ('Tenant', _('Tenant')),
@@ -39,7 +38,7 @@ class Account_Creation ( FriendlyErrorMessagesMixin , serializers.ModelSerialize
 
     class Meta:
         model = User
-        fields = [ 'first_name', 'last_name','email', 'contact_number', 'account_type' ]
+        fields = [ 'first_name', 'last_name','email', 'contact_number', 'account_type' , 'password' ]
 
     def get_cleaned_data(self):
         return {
@@ -49,26 +48,21 @@ class Account_Creation ( FriendlyErrorMessagesMixin , serializers.ModelSerialize
                 'email': self.validated_data.get('email'),
                 'contact_number': self.validated_data.get('contact_number'),
                 'account_type': self.validated_data.get('account_type'),
+                'password': self.validated_data.get('password'),
         }
 
 
     def validate_email(self, value):
         user_exist= User.objects.filter(email=value).exists()
         if user_exist:
-            self.register_error(
-                error_message=_('This email address used is already taken. Please login!'),
-                error_code='email_taken',
-                field_name='email')
+            return serializers.ValidationError('This email address used is already taken. Please login!')
         return value
 
 
     def validate_contact_number(self, value):
         contact_number= User.objects.filter(contact_number=value).exists()
         if contact_number:
-            self.register_error(
-                error_message=_('The contact number already exist.'),
-                error_code='contact_number_exist',
-                field_name='contact_number')
+            return serializers.ValidationError('The contact number already exist.')
         return value
 
 

@@ -48,7 +48,7 @@ urlpatterns = [
 # API URLS
 urlpatterns += [
     # API base url
-    path("api/", include("config.api_router")),
+    path("api/", include("estate_project.users.api.urls")),
     # DRF auth token
     path("auth-token/", obtain_auth_token),
     path('api-doc/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
