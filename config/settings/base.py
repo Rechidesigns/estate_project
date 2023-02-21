@@ -109,6 +109,7 @@ LOCAL_APPS = [
     "estate_project.users",
     # Your stuff: custom apps go here
     "properties.apps.PropertiesConfig",
+    "locations.apps.LocationsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

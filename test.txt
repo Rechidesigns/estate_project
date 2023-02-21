@@ -1,0 +1,24 @@
+
+utilities = [
+    'nepa'--- id 1,
+    'gen'--- id 2,
+]
+
+unit = [
+    'options1'--- id 1,
+    'options2'--- id 2,
+]
+
+
+foreign key method 
+
+michael = '2'
+
+
+many to many 
+
+michael = [
+   '1',
+]
+
+
