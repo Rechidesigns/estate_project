@@ -1,6 +1,5 @@
 # Imports
 
-
 # Django import 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -12,19 +11,17 @@ from estate_project.users.models import User
 
 
 
-
-# Property Types
-class Property_Type (models.Model):
+class Property_Options ( models.Model ):
     """
     this hold the property type
     """
 
-    property_type = models.CharField(
-        verbose_name= _('Property Type'),
+    option = models.CharField(
+        verbose_name= _('Option Type'),
         max_length= 255,
         null = True,
         blank= True,
-        help_text=_("Property type refers to property characteristics and/or dwelling configuration, on which there can be one or more residential structures")
+        help_text=_("Option type refers to property options that will be used during uploading of properties by the property owner or landlord ")
     )
 
     active = models.BooleanField(
@@ -32,12 +29,21 @@ class Property_Type (models.Model):
         default=False,
         null=True,
         blank=True,
-        help_text=_(" this indicates is the active property type is enabled or not ")
+        help_text=_(" this indicates if the active option type is enabled or not ")
     )
 
 
-    def __str__(self):
-        return str(self.property_type)
+    class Meta:
+        abstract = True
+        
+
+
+
+# Property Types
+class Property_Type (Property_Options):
+    # this function holds the property type
+    def __str__(self) -> str:
+        return self.option
     
     class Meta:
         verbose_name = _("Properties Type")
@@ -46,96 +52,33 @@ class Property_Type (models.Model):
 
 
 # properties parking type
-class Parking_Type (models.Model):
-    """
-    this hold the parking type
-    """
-
-    parking_type = models.CharField(
-        verbose_name= _('Parking Type'),
-        max_length= 255,
-        null = True,
-        blank= True,
-        help_text=_("parking in real estate generally refers to parking that is available to the public without any restrictions. This can mean that there is no charge for parking, or that the parking is available on a first-come, first-serve basis.")
-    )
-
-    active = models.BooleanField(
-        verbose_name=_("Active"),
-        default=False,
-        null=True,
-        blank=True,
-        help_text=_(" this indicates is the active property type is enabled or not ")
-    )
-
-
-    def __str__(self):
-        return str(self.parking_type)
+class Parking_Type (Property_Options): 
+    # this function holds the parking type 
+    def __str__(self) -> str:
+        return self.option
     
     class Meta:
         verbose_name = _("Parking Type")
         verbose_name_plural = _("Parking Type")
 
 
-
-
-
 # properties parking type
-class Utilities (models.Model):
-    """
-    this hold the properties utilities
-    """
+class Utilities (Property_Options):
+    # this function holds the utilities 
+    def __str__(self) -> str:
+        return self.option
 
-    utility = models.CharField(
-        verbose_name= _('Utility'),
-        max_length= 255,
-        null = True,
-        blank= True,
-        help_text=_("utility property means any property owned by persons or corporations and used for electric and gas production, transmission or distribution of water and other products, communications, including cable television, transportation and waste disposal.")
-    )
-
-    active = models.BooleanField(
-        verbose_name=_("Active"),
-        default=False,
-        null=True,
-        blank=True,
-        help_text=_(" this indicates is the active utilities is enabled or not ")
-    )
-
-
-    def __str__(self):
-        return str(self.utility)
-    
     class Meta:
         verbose_name = _("Utilities")
         verbose_name_plural = _("Utilities")
 
 
 # properties outdoor space type
-class OutDoor_Spaces (models.Model):
-    """
-    this hold the OutDoor Space 
-    """
-
-    outdoor_space = models.CharField(
-        verbose_name= _('Outdoor Space'),
-        max_length= 255,
-        null = True,
-        blank= True,
-        help_text=_("Outdoor space means a patio or deck, whether covered or uncovered, a yard, a walkway, or a parking lot, or a portion of any such space, that is located on or adjacent to the business premises, which space is owned, leased, or otherwise in the lawful control of the owner or operator of the business premises..")
-    )
-
-    active = models.BooleanField(
-        verbose_name=_("Active"),
-        default=False,
-        null=True,
-        blank=True,
-        help_text=_(" this indicates is the active utilities is enabled or not ")
-    )
-
-
-    def __str__(self):
-        return str( self.outdoor_space )
-    
+class OutDoor_Spaces (Property_Options):
+    # this function holds the outdoor space
+    def __str__(self) -> str:
+        return self.option
+      
     class Meta:
         verbose_name = _("Out-Door Space")
         verbose_name_plural = _("Out-Door Space")
@@ -143,36 +86,14 @@ class OutDoor_Spaces (models.Model):
 
 
 # properties Other_Amenities type
-class Other_Amenities (models.Model):
-    """
-    this hold the OutDoor Space 
-    """
-
-    amenity = models.CharField(
-        verbose_name= _('Other Amenity'),
-        max_length= 255,
-        null = True,
-        blank= True,
-        help_text=_(" Amenities are things such as stores or sports facilities that are provided for people's convenience, enjoyment, or comfort. ")
-    )
-
-    active = models.BooleanField(
-        verbose_name=_("Active"),
-        default=False,
-        null=True,
-        blank=True,
-        help_text=_(" this indicates is the active utilities is enabled or not ")
-    )
-
-
-    def __str__(self):
-        return str( self.amenity )
-    
+class Other_Amenities (Property_Options):
+    # this function holds the other amenities
+    def __str__(self) -> str:
+        return self.option
+      
     class Meta:
-        verbose_name = _("Out-Door Space")
-        verbose_name_plural = _("Out-Door Space")
-
-
+        verbose_name = _("Other Amenities Space")
+        verbose_name_plural = _("Other Amenities Space")
 
 
 
@@ -260,6 +181,14 @@ class Properties (BaseModel):
         help_text=_(" A group of numbers or letters and numbers which are added to a postal address to assist the sorting of mail. ")
     )
 
+    amount = models.DecimalField(
+        verbose_name = _("Amount "),
+        null=True, blank=True,
+        max_digits = 300, decimal_places = 2,
+        default=0.00,
+        help_text=_("this is the rent fee that will be paid by the tenant")
+    )
+
     number_of_unit = models.CharField(
         verbose_name= _('Number of Unit'),
         max_length= 10,
@@ -298,6 +227,24 @@ class Properties (BaseModel):
         help_text=_(" Number of Rooms or Bathrooms means total number of rooms or bathrooms within a  property. ")
     )
 
+    floor_area = models.CharField(
+        choices= FLOOR_AREA,
+        verbose_name= _('Floor Area'),
+        max_length= 20,
+        null = True,
+        blank= True,
+        help_text=_(" This is the floor area of the property")
+    )
+
+    ac_type = models.CharField(
+        choices= AC_TYPE,
+        verbose_name= _('AC Type'),
+        max_length= 20,
+        null = True,
+        blank= True,
+        help_text=_(" This is the ac type of the property")
+    )
+
     parking_type = models.ManyToManyField(
         Parking_Type, 
         verbose_name = _('Parking Type '),
@@ -334,6 +281,7 @@ class Properties (BaseModel):
         verbose_name = _('Property Image'),
         upload_to = "photos/properties_image",
         null =True,
+        blank=True,
         help_text= _('Properties  image for the current properties, which should be in PNG, JPEG, or JPG format')
     )
 
@@ -341,6 +289,7 @@ class Properties (BaseModel):
         verbose_name = _('Property Video'),
         upload_to = "videos/properties_videos",
         null =True,
+        blank=True,
         help_text= _('Properties  video for the current properties, which should be in mp4 format')
     )
 
@@ -358,6 +307,43 @@ class Properties (BaseModel):
         ordering = ('-created_date',)
         verbose_name = _('All Landlord Properties')
         verbose_name_plural = _('All Landlord Properties')
+
+
+
+
+class PropertyImage(BaseModel):
+    # adding property multiple images
+    property = models.ForeignKey(
+        Properties, on_delete=models.CASCADE,
+        null=True,
+        verbose_name=_("Property"),
+        help_text=_("Product of which the images belongs to.")
+    )
+
+    image = models.ImageField(
+        verbose_name = _('Product Image'),
+        upload_to = "photos/properties_image",
+        null =True,
+        help_text= _('Properties  image for the current properties, which should be in PNG, JPEG, or JPG format')
+    )
+
+    class Meta:
+        ordering = ('-created_date',)
+        verbose_name = _("Property Image")
+        verbose_name_plural = _("Property Images")
+
+    def __str__(self):
+        return str(self.property)
+        
+    # image compressor
+    # def save(self, *args, **kwargs):
+    #     if self.image:
+    #         super().save(*args, **kwargs)
+    #         # Image.open() can also open other image types
+    #         img = Image.open(self.image.path)
+    #         # WIDTH and HEIGHT are integers
+    #         resized_img = img.resize((640, 640))
+    #         resized_img.save(self.image.path)
 
 
 

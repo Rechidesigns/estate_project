@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
-class BaseModel(models.Model):
+class BaseModel (models.Model):
     id = models.UUIDField(
         verbose_name = _('id'),
         default = uuid.uuid4,
@@ -35,5 +35,8 @@ class BaseModel(models.Model):
 
     def __str__(self):
         return self.created_date
+
+
+
 
 

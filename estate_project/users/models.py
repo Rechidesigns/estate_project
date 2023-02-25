@@ -87,14 +87,14 @@ class User(AbstractUser):
         verbose_name=_("First names"),
         max_length=50,
         null=True,
-        help_text=_("The first nammes of the customer.")
+        help_text=_("The first names of the customer.")
     )
 
     last_name = models.CharField(
         max_length=50,
         verbose_name=_("Last names"),
         null=True,
-        help_text=_("The last nammes of the customer.")
+        help_text=_("The last names of the customer.")
     ) 
 
     contact_number = models.CharField(
