@@ -85,6 +85,18 @@ class OutDoor_Spaces (Property_Options):
 
 
 
+# properties appliances type
+class Appliances (Property_Options):
+    # this function holds the appliances
+    def __str__(self) -> str:
+        return self.option
+      
+    class Meta:
+        verbose_name = _("appliances")
+        verbose_name_plural = _("appliances")
+
+
+
 # properties Other_Amenities type
 class Other_Amenities (Property_Options):
     # this function holds the other amenities

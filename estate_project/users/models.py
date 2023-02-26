@@ -127,7 +127,12 @@ class User(AbstractUser):
         verbose_name = _("users  Account")
         verbose_name_plural = _("users  Account")
 
+    # def __str__(self):
+    #     return str(self.email)
     def __str__(self):
-        return str(self.email)
+        return f"{self.first_name} {self.last_name} ({self.email})"
+    # def __str__(self) -> str:
+    #     return self.first_name + " " + self.last_name
+    
 
 
