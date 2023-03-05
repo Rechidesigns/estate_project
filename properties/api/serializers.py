@@ -57,7 +57,7 @@ class Property_Serializer(serializers.ModelSerializer):
 
     class Meta: 
         model = Properties
-        fields = ['address_1','address_2','country','state','city','post_code','amount','number_of_unit', 'appliances', 'property_type','unit_number','number_of_storeys','number_of_bedroom_and_bathroon','parking_type','funished','utilities','outdoor_sapce','other_amenities','properties_image','properties_video','neighborhood_features','floor_area','ac_type',]
+        fields = ['id','address_1','address_2','country','state','city','post_code','amount','number_of_unit', 'appliances', 'property_type','unit_number','number_of_storeys','number_of_bedroom_and_bathroon','parking_type','funished','utilities','outdoor_sapce','other_amenities','properties_image','properties_video','neighborhood_features','floor_area','ac_type',]
 
 
 
@@ -72,4 +72,4 @@ class List_Property_Serializer(serializers.ModelSerializer):
 
     class Meta: 
         model = Properties
-        fields = ['address_1','address_2','country','state','city','post_code','amount','number_of_unit', 'appliances', 'property_type','unit_number','number_of_storeys','number_of_bedroom_and_bathroon','parking_type','funished','utilities','outdoor_sapce','other_amenities','properties_image','properties_video','neighborhood_features','floor_area','ac_type',]
+        fields = ['id','address_1','address_2','country','state','city','post_code','amount','number_of_unit', 'appliances', 'property_type','unit_number','number_of_storeys','number_of_bedroom_and_bathroon','parking_type','funished','utilities','outdoor_sapce','other_amenities','properties_image','properties_video','neighborhood_features','floor_area','ac_type',]
