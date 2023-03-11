@@ -112,6 +112,7 @@ LOCAL_APPS = [
     "properties.apps.PropertiesConfig",
     "locations.apps.LocationsConfig",
     "inmessages.apps.InmessagesConfig",
+    "tenants.apps.TenantsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

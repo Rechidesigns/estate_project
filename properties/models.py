@@ -38,7 +38,6 @@ class Property_Options ( models.Model ):
         
 
 
-
 # Property Types
 class Property_Type (Property_Options):
     # this function holds the property type

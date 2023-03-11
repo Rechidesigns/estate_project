@@ -90,9 +90,9 @@ class Property_Detail_View( APIView ):
         property = self.get_object( p_id )
         serializer = Property_Serializer( property, data=request.data )
         if serializer.is_valid():
-            serializer.save(  )
-            return Response({'serializer.data'})
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializer.save( )
+            return Response({'status':'successful', 'message':'the details of the property has been updated'}, status = status.HTTP_200_OK)
+        return Response({'status':'fail'},serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
     def delete(self, request, p_id, format=None):

@@ -7,15 +7,25 @@ from helpers.common.basemodel import BaseModel
 from estate_project.users.models import User
 
 
-class Esate_Messages ( BaseModel ):
+MESSAGE_TYPE = (
+    ("maintanance", _("Maintanance")),
+    ("utilities", _("Utilities")),
+    ("bills", _("Bills")),
+    ("others", _("Others")),
+)
+
+
+
+class Estate_Messages ( BaseModel ):
     """
     this hold the messaging system btw the landlord and 
     the tenants
     """
 
     message_type  = models.CharField(
+        choices= MESSAGE_TYPE,
         verbose_name= _('Message Type'),
-        max_length= 255,
+        max_length= 20,
         null = True,
         blank= True,
         help_text=_("this fields requires the message type of which the message will be sent with and categorized into")
