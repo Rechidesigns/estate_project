@@ -8,10 +8,12 @@ from properties.models import Properties
 
 
 PROPERTY_ACTION = (
+
         ("rented", _("Rented")),
         ("processing", _("Processing")),
         ("declined", _("Declined")),
         ("review", _("Review")),
+        
     )
 
 
@@ -62,9 +64,10 @@ class Tenant( BaseModel ):
         verbose_name= _("Action Date"),
         auto_now_add= True,
         null= True,
+        blank= True,
         help_text= _("This is the date when the action was taken."),
     )
-
+    
     notification = models.BooleanField(
         verbose_name= _("Notification"),
         default= False,
@@ -80,7 +83,7 @@ class Tenant( BaseModel ):
         verbose_name_plural = _("Tenants")
 
     def __str__(self):
-        return str(self.Tenant.Properties)
+        return str(self.properties)
 
 
 

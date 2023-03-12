@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
-from django.urls import reverse
 from django.conf import settings
 
 import uuid
@@ -85,20 +84,20 @@ class User(AbstractUser):
 
     first_name = models.CharField(
         verbose_name=_("First names"),
-        max_length=50,
+        max_length=100,
         null=True,
         help_text=_("The first names of the customer.")
     )
 
     last_name = models.CharField(
-        max_length=50,
+        max_length=100,
         verbose_name=_("Last names"),
         null=True,
         help_text=_("The last names of the customer.")
     ) 
 
     contact_number = models.CharField(
-        max_length=50,
+        max_length=100,
         verbose_name=_("Contact Number"),
         null=True,
         help_text=_("contact number of the customer.")
