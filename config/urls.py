@@ -79,6 +79,7 @@ urlpatterns += [
     path("messages/", include("inmessages.api.urls")),
     # tenants urls
     path("tenants/", include("tenants.api.urls")),
+    path('', include('admin_argon.urls')),
 
 ]
 

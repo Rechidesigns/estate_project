@@ -62,11 +62,12 @@ class Rent_Property_View( CreateAPIView ):
             'request.user.email',
             # landlord email here
             ['landlord_property.landlord'],
-            fail_silently=False,
+            fail_silently = False,
         )
     
         return Response({'status':'successfull', 'message': 'the property rent process is been submited for review'}, status = status.HTTP_200_OK)
     
+
     def patch ( self, request, property_id ):
         all_my_properties = Tenant.objects.get( id = property_id, landlord = request.user )
         all_my_properties.action = "processing"
@@ -74,19 +75,11 @@ class Rent_Property_View( CreateAPIView ):
         all_my_properties.action_date = timezone.now()
         all_my_properties.save()
 
-        return Response({'status':'successfull', 'message': 'the property has been updated'}, status = status.HTTP_200_OK)
-    
+        return Response({ 'status':'successfull', 'message': 'the property has been updated' }, status = status.HTTP_200_OK )
 
 
 
-"""
 
-        patch method request =  PROPERTY ID 
-        all_my_properties = Tennats.objects.get( id = id , landlord = request.user )
-        all_my_properties.action = "processing"
-        all_my_properties.status = False
-        all_my_properties.action_date = timezone.now()
-        all_my_properties.save()
-      
-"""
-        
+
+
+
