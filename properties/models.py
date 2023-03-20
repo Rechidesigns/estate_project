@@ -224,7 +224,7 @@ class Properties (BaseModel):
 
     number_of_storeys = models.CharField(
         verbose_name= _('Number of Storeys'),
-        max_length= 10,
+        max_length= 100,
         null = True,
         blank= True,
         help_text=_(" Number of levels of living area a dwelling has above grade. Examples: A ranch is typically a 1- story dwelling or 1 story with attic. A cape is typically a 1.5 or 1.75 story home. Colonials are typically denoted with a 2 story, 2 story with attic, and 2.5 dwellings. ")
@@ -232,7 +232,7 @@ class Properties (BaseModel):
 
     number_of_bedroom_and_bathroon = models.CharField(
         verbose_name= _('Number of Bedrooms and Bathrooms'),
-        max_length= 10,
+        max_length= 100,
         null = True,
         blank= True,
         help_text=_(" Number of Rooms or Bathrooms means total number of rooms or bathrooms within a  property. ")
@@ -358,9 +358,47 @@ class PropertyImage(BaseModel):
 
 
 
+class Comments(models.Model):
+
+    user = models.ForeignKey(
+        User,
+        on_delete= models.CASCADE,
+        verbose_name = _("Commenter"),
+        related_name= "UserComments",
+        null= True,
+        help_text= _("This profile belongs to the commenter")
+    )
+
+    property = models.ForeignKey(
+        Properties,
+        on_delete= models.CASCADE,
+        verbose_name= _("Property Comment"),
+        null= True,
+        help_text= _("This property has been commented on.")
+    )
+
+    comment = models.TextField(
+        verbose_name= _("Comment"),
+        null = True,
+        blank = True,
+        help_text= _("This comment is made for the property")
+    )
+
+    active = models.BooleanField(
+        verbose_name=_("Active"),
+        default=False,
+        null=True,
+        blank=True,
+        help_text=_(" this indicates if the active option type is enabled or not ")
+    )
 
 
+    def __str__(self):
+        return str(self.comment)
 
+    class Meta:
+        verbose_name = _('All Property Comments')
+        verbose_name_plural = _('All Properties Comments')
 
 
 

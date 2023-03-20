@@ -28,4 +28,13 @@ class None_Rented_Properties (serializers.ModelSerializer):
         model = Tenant
         fields = ['id','landlord', 'properties','notification','status', 'action_date', 'created_date']
 
-        
+
+
+# class Applicant_Information_Details(serializers.ModelSerializer):
+    
+#     properties = Property_Details( read_only= True )
+
+#     class Meta:
+#         model = Applicant_Information
+#         fields = ['id', 'properties', 'full_name', 'date_of_birth', 'nin', 'bvn', 'email_address', 'contact_number', 'drivers_license', 'family_size', 'personal_references', 'rental_history', 'employment_income', 'credit_check', 'criminal_security_background_check', 'status']
+

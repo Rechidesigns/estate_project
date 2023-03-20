@@ -9,7 +9,6 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.core.mail import send_mail
-
 from .serializers import None_Rented_Properties
 from tenants.models import Tenant
 from properties.models import Properties
@@ -59,9 +58,9 @@ class Rent_Property_View( CreateAPIView ):
             ' Property Rent Notification ',
             f'Hey { landlord_property.landlord.name }, kindly check your rechi property dashboard , you currently have a tenant that wants to rent your listed property',
             # tenant email here 
-            'request.user.email',
+            request.user.email,
             # landlord email here
-            ['landlord_property.landlord'],
+            [landlord_property.landlord.email],
             fail_silently = False,
         )
     
@@ -78,6 +77,26 @@ class Rent_Property_View( CreateAPIView ):
         return Response({ 'status':'successfull', 'message': 'the property has been updated' }, status = status.HTTP_200_OK )
 
 
+
+
+# class Applicant_Information_Views(ListCreateAPIView):
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = Applicant_Information_Details
+
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save( )
+#             return Response({'status': 'successful', 'message': 'applicant information has been uploaded successfully', 'data': serializer.data}, status=status.HTTP_201_CREATED)
+
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+#     def get ( self, request , *args, **kwargs ):
+#         qs = Applicant_Information.objects.all()
+#         serializer = Applicant_Information_Details(qs , many = True)
+#         return Response( {'status':'successful', 'message':'applicant information has been fetched','data':serializer.data } , status=status.HTTP_201_CREATED )
 
 
 

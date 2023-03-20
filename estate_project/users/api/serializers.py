@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from estate_project.users.models import User
-
+# from estate_project.users.models import User_KYC
 
 
 User = get_user_model()
@@ -38,7 +38,7 @@ class Account_Creation (  serializers.ModelSerializer ):
 
     class Meta:
         model = User
-        fields = [ 'first_name', 'last_name','email', 'contact_number', 'account_type' , 'password' ]
+        fields = ['first_name', 'last_name','email', 'contact_number', 'account_type' , 'password' ]
 
     def get_cleaned_data(self):
         return {
@@ -74,7 +74,11 @@ class Account_Creation (  serializers.ModelSerializer ):
 
 
 
-    
+# class User_KYC_Serializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = User_KYC
+#         fields = ['gender', 'date_of_birth', 'profile_image', 'nin', 'bvn', 'drivers_license', 'family_size','personal_references', 'rental_history', 'employment_income', 'credit_check', 'criminal_security_background_check','nationality','status']
 
     
 

@@ -11,6 +11,7 @@ MESSAGE_TYPE = (
     ("maintanance", _("Maintanance")),
     ("utilities", _("Utilities")),
     ("bills", _("Bills")),
+    ("complaints", _("Complaints")),
     ("others", _("Others")),
 )
 
@@ -31,6 +32,14 @@ class Estate_Messages ( BaseModel ):
         help_text=_("this fields requires the message type of which the message will be sent with and categorized into")
     )
 
+    sender = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        verbose_name= _("Sender"),
+        related_name= "message_sender",
+        null= True,
+        help_text= _("The sender of the message"),
+    )
+
     recipients = models.ForeignKey(
         User, 
         on_delete = models.CASCADE,
@@ -40,7 +49,7 @@ class Estate_Messages ( BaseModel ):
         help_text=_(' this provides the recipients to which this message will be sent to')
     )
 
-    subject  = models.CharField(
+    subject_heading  = models.CharField(
         verbose_name= _('Subject'),
         max_length= 255,
         null = True,
@@ -48,7 +57,7 @@ class Estate_Messages ( BaseModel ):
         help_text=_(" The subject line of an email is the single line of text people see when they receive your email. This one line of text can often determine whether an email is opened or sent straight to the trash, so make sure it's optimized for your audience ")
     )
 
-    body = models.TextField(
+    message_content = models.TextField(
         verbose_name= _('Subject'),
         null = True,
         blank= True,
@@ -64,7 +73,7 @@ class Estate_Messages ( BaseModel ):
     )
 
     def __str__(self):
-        return str(self.recipients)
+        return str(self.message_type)
 
     class Meta:
         ordering = ('-created_date',)

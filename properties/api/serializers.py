@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from properties.models import Properties , Other_Amenities , OutDoor_Spaces , Utilities , Parking_Type , Property_Type, Appliances
+from properties.models import Comments
 
 
 class Property_Type_Serializer (serializers.ModelSerializer):
@@ -73,3 +74,10 @@ class List_Property_Serializer(serializers.ModelSerializer):
     class Meta: 
         model = Properties
         fields = ['id','address_1','address_2','country','state','city','post_code','amount','number_of_unit', 'appliances', 'property_type','unit_number','number_of_storeys','number_of_bedroom_and_bathroon','parking_type','funished','utilities','outdoor_sapce','other_amenities','properties_image','properties_video','neighborhood_features','floor_area','ac_type',]
+
+
+class Comment_Serializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comments
+        fields = ["id", "property", "comment"]

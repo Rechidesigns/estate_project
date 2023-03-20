@@ -60,7 +60,7 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'estate_project',
+        'NAME': 'estate_database',
         'USER': 'postgres',
         'PASSWORD': 'Alexwhite96',
         'HOST': 'localhost',
@@ -105,6 +105,7 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     "drf_yasg",
     "rest_framework_simplejwt",
+    "django_filters",
 ]
 
 LOCAL_APPS = [
@@ -114,6 +115,7 @@ LOCAL_APPS = [
     "locations.apps.LocationsConfig",
     "inmessages.apps.InmessagesConfig",
     "tenants.apps.TenantsConfig",
+
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -333,6 +335,10 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+
+
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
     
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
