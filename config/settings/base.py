@@ -115,6 +115,7 @@ LOCAL_APPS = [
     "locations.apps.LocationsConfig",
     "inmessages.apps.InmessagesConfig",
     "tenants.apps.TenantsConfig",
+    "kyc.apps.KycConfig",
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

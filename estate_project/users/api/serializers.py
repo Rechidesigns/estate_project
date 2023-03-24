@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from estate_project.users.models import User
-# from estate_project.users.models import User_KYC
+# from estate_project.users.models import Applicant_Information
 
 
 User = get_user_model()
@@ -74,11 +74,11 @@ class Account_Creation (  serializers.ModelSerializer ):
 
 
 
-# class User_KYC_Serializer(serializers.ModelSerializer):
+# class Applicant_Information_KYC_Serializer(serializers.ModelSerializer):
 
 #     class Meta:
-#         model = User_KYC
-#         fields = ['gender', 'date_of_birth', 'profile_image', 'nin', 'bvn', 'drivers_license', 'family_size','personal_references', 'rental_history', 'employment_income', 'credit_check', 'criminal_security_background_check','nationality','status']
+#         model = Applicant_Information
+#         fields = ['user_id', 'gender', 'date_of_birth', 'profile_image', 'nin', 'bvn', 'drivers_license', 'family_size','personal_references', 'rental_history', 'employment_income', 'credit_check', 'criminal_security_background_check','nationality','status']
 
     
 

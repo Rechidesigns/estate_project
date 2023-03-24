@@ -16,6 +16,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 
 
+from tenants.models import Tenant
+
 
 
 class Property_Options_ViewSet ( ListAPIView ):
@@ -57,17 +59,17 @@ class Property_Options_ViewSet ( ListAPIView ):
 class Properties_View ( ListCreateAPIView ):
     
     permission_classes = [ IsAuthenticated ]
-    queryset = Properties.objects.all()
+    # queryset = Properties.objects.all()
     serializer_class = Property_Serializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['country','state','city','number_of_storeys','number_of_bedroom_and_bathroon',]
-    search_fields = ['country','state','city','number_of_storeys','number_of_bedroom_and_bathroon',]
+    # filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    # filterset_fields = ['country','state','city','number_of_storeys','number_of_bedroom_and_bathroon',]
+    # search_fields = ['country','state','city','number_of_storeys','number_of_bedroom_and_bathroon',]
 
 
     def post ( self, request , *args, **kwargs ):
         serializer = self.serializer_class( data = request.data )
         if serializer.is_valid ():
-            serializer.save( Landlord = request.user )
+            serializer.save( Landlord = request.user ) #Landlord = request.user
             return Response( {'status':'successful', 'message':'property has been uploaded successful','data':serializer.data} , status = status.HTTP_201_CREATED )
 
         return Response(serializer.error_messages, status = status.HTTP_400_BAD_REQUEST)
@@ -136,6 +138,8 @@ class Comment_View ( ListCreateAPIView ):
         serializer = Comment_Serializer(qs , many = True)
         return Response( {'status':'successful', 'message':'Comments has been fetched','data':serializer.data } , status=status.HTTP_201_CREATED )
 
+
+# class LandlordAdminView( ListAPIView ):
 
 # class Properties_List(ListAPIView):
 #     queryset = Properties.objects.all()

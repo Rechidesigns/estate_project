@@ -35,28 +35,50 @@ class All_Free_Property_View( APIView ):
 
 
 
-class Rent_Property_View( CreateAPIView ):
+class Rent_Property_View( APIView ):
+    """
+    this function store the property renting action which
+    meant to taken by the tenants only.
+    """
     permission_classes = [ IsAuthenticated, ]
     serializer_class = None_Rented_Properties
+    rent_qs = Tenant.objects.all()
 
     def post ( self, request, property_id ):
         try:
             landlord_property = Properties.objects.get( id = property_id )
+
         except Properties.DoesNotExist:
-            return Response({'status':'property not found', 'message': 'Property can not be found'}, status = status.HTTP_404_NOT_FOUND )
+            return Response({'status':'error', 'message': 'Property can not be found in our database.'}, status = status.HTTP_404_NOT_FOUND )
+
+
+        # checking if the property is already been processed by the tenant
+        checking_rent_by_user = self.rent_qs.filter( properties_id = property_id )
+        
+        for t in checking_rent_by_user:
+            if t.user == request.user:
+                return Response({'status':'error', 'message': 'Renting property is already been process by you, kindly cancel or wait for the landlord action.'}, status = status.HTTP_404_NOT_FOUND )
+
+            elif t.action == "rented":
+                return Response({'status':'error', 'message': 'Property has been rented out by the landlord'}, status = status.HTTP_404_NOT_FOUND )
+            
+            else:
+                pass
 
         rent_property = Tenant()
-        rent_property.user = request.user
-        rent_property.landlord = landlord_property.landlord
-        rent_property.property = landlord_property
-        rent_property.action = "processing"
+        rent_property.user = request.user # this is the tenant account
+        rent_property.landlord = landlord_property.landlord # this is the landlord account
+        rent_property.properties = landlord_property # this is the landlord property profile
+        rent_property.action = "processing" # this is the property status
         rent_property.status = False
-        rent_property.action_date = timezone.now()
-        rent_property.save()
+        rent_property.action_date = timezone.now() #this stores the action timestamp
+        rent_property.save() #this saves the rental process
 
+
+        # sending email to the property owner - email notification
         send_mail(
             ' Property Rent Notification ',
-            f'Hey { landlord_property.landlord.name }, kindly check your rechi property dashboard , you currently have a tenant that wants to rent your listed property',
+            f'Hey Landlord, kindly check your rechi property dashboard , you currently have a tenant that wants to rent your listed property',
             # tenant email here 
             request.user.email,
             # landlord email here
