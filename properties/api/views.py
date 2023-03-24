@@ -56,7 +56,7 @@ class Property_Options_ViewSet ( ListAPIView ):
 
 
 
-class Properties_View ( ListCreateAPIView ):
+class Properties_View ( ListCreateAPIView  ):
     
     permission_classes = [ IsAuthenticated ]
     # queryset = Properties.objects.all()
@@ -75,9 +75,8 @@ class Properties_View ( ListCreateAPIView ):
         return Response(serializer.error_messages, status = status.HTTP_400_BAD_REQUEST)
 
 
-
     def get ( self, request , *args, **kwargs ):
-        qs = Properties.objects.all()
+        qs = Properties.objects.filter( landlord = self.request.user )
         serializer = List_Property_Serializer(qs , many = True)
         return Response( {'status':'successful', 'message':'landlord properties has been fetched','data':serializer.data } , status=status.HTTP_201_CREATED )
 

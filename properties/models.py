@@ -32,6 +32,8 @@ class Property_Options ( models.Model ):
         help_text=_(" this indicates if the active option type is enabled or not ")
     )
 
+    def __str__(self) -> str:
+        return self.option
 
     class Meta:
         abstract = True
@@ -41,9 +43,6 @@ class Property_Options ( models.Model ):
 # Property Types
 class Property_Type (Property_Options):
     # this function holds the property type
-    def __str__(self) -> str:
-        return self.option
-    
     class Meta:
         verbose_name = _("Properties Type")
         verbose_name_plural = _("Properties Type")
@@ -53,9 +52,6 @@ class Property_Type (Property_Options):
 # properties parking type
 class Parking_Type (Property_Options): 
     # this function holds the parking type 
-    def __str__(self) -> str:
-        return self.option
-    
     class Meta:
         verbose_name = _("Parking Type")
         verbose_name_plural = _("Parking Type")
@@ -63,10 +59,7 @@ class Parking_Type (Property_Options):
 
 # properties parking type
 class Utilities (Property_Options):
-    # this function holds the utilities 
-    def __str__(self) -> str:
-        return self.option
-
+    # this function holds the utilities
     class Meta:
         verbose_name = _("Utilities")
         verbose_name_plural = _("Utilities")
@@ -75,8 +68,6 @@ class Utilities (Property_Options):
 # properties outdoor space type
 class OutDoor_Spaces (Property_Options):
     # this function holds the outdoor space
-    def __str__(self) -> str:
-        return self.option
       
     class Meta:
         verbose_name = _("Out-Door Space")
@@ -87,8 +78,6 @@ class OutDoor_Spaces (Property_Options):
 # properties appliances type
 class Appliances (Property_Options):
     # this function holds the appliances
-    def __str__(self) -> str:
-        return self.option
       
     class Meta:
         verbose_name = _("appliances")
@@ -99,8 +88,6 @@ class Appliances (Property_Options):
 # properties Other_Amenities type
 class Other_Amenities (Property_Options):
     # this function holds the other amenities
-    def __str__(self) -> str:
-        return self.option
       
     class Meta:
         verbose_name = _("Other Amenities Space")
