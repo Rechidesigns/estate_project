@@ -1,16 +1,15 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, ListAPIView, ListCreateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, ListCreateAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny , IsAuthenticated
 from django.shortcuts import get_object_or_404
 from .serializers import Account_Creation
-# from .serializers import Applicant_Information_KYC_Serializer
 from estate_project.users.models import User
-# from estate_project.users.models import Applicant_Information
 from rest_framework.views import APIView
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from rest_framework import status
+from .serializers import ChangePasswordSerializer
 
 
 
@@ -49,47 +48,37 @@ class Register_Account ( CreateAPIView ) :
 
 
 
-# class Applicant_Information_KYC_View( ListCreateAPIView ):
 
-#     permission_classes = [ IsAuthenticated ]
-#     serializer_class = Applicant_Information_KYC_Serializer
-#     queryset = Applicant_Information.objects.filter( status = True )
+class ChangePasswordView(UpdateAPIView):
+    """
+    An endpoint for changing password.
+    """
+    serializer_class = ChangePasswordSerializer
+    model = User
+    permission_classes = (IsAuthenticated,)
 
-#     # qs = Applicant_Information.objects.all()
-#     def get(self, request):
-#        kyc_details  =  Applicant_Information.objects.all()
-#        serializer =  Applicant_Information_KYC_Serializer(kyc_details, many=True)
-#        return Response(serializer.data)
-    
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
 
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
 
-#     def post (self, request , *args, **kwargs ):
-#         serializer = self.serializer_class( data = request.data )
+        if serializer.is_valid():
+            # Check old password
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            response = {
+                'status': 'success',
+                'code': status.HTTP_200_OK,
+                'message': 'Password updated successfully',
+                'data': []
+            }
 
-#         if serializer.is_valid():
-#             serializer.save()
-#             # return response
-#             return Response( {'status':'successful', 'message':'your KYC informations has been created succesfully', 'data':serializer.data } , status = status.HTTP_201_CREATED )
+            return Response(response)
 
-#         return Response( {'status':'error', 'message':'check your input and try again',} , status = status.HTTP_400_BAD_REQUEST )
-
-
-
-# class Applicant_Information_Detail_View(APIView):
-
-#     permission_classes = [ IsAuthenticated ]
-#     serializer_class = Applicant_Information_KYC_Serializer
-
-#     def get_object( self, kyc_id ):
-      
-#         kyc = get_object_or_404 (Applicant_Information, id = kyc_id )
-#         return kyc
-
-
-#     def get (self, request, kyc_id ):
-#         kyc = self.get_object( kyc_id )        
-#         serializer = self.serializer_class( kyc )
-#         return Response({'status':'successful','message':'the detail information about the property','data':serializer.data }, status = status.HTTP_200_OK )
-
-
-
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -32,8 +32,11 @@ class Property_Options ( models.Model ):
         help_text=_(" this indicates if the active option type is enabled or not ")
     )
 
-    def __str__(self) -> str:
-        return self.option
+    # def __str__(self):
+    #     return self.id
+    
+    def __str__(self):
+        return str(self.option)
 
     class Meta:
         abstract = True
@@ -274,6 +277,7 @@ class Properties (BaseModel):
         verbose_name = _('Other Amenities '),
         help_text=_(""" Amenities are things such as stores or sports facilities that are provided for people's convenience, enjoyment, or comfort.  """)
     )
+
 
     properties_image = models.ImageField(
         verbose_name = _('Property Image'),

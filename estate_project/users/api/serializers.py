@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from estate_project.users.models import User
-# from estate_project.users.models import Applicant_Information
+from rest_framework import serializers
 
 
 User = get_user_model()
@@ -74,15 +74,14 @@ class Account_Creation (  serializers.ModelSerializer ):
 
 
 
-# class Applicant_Information_KYC_Serializer(serializers.ModelSerializer):
+class ChangePasswordSerializer(serializers.Serializer):
+    model = User
 
-#     class Meta:
-#         model = Applicant_Information
-#         fields = ['user_id', 'gender', 'date_of_birth', 'profile_image', 'nin', 'bvn', 'drivers_license', 'family_size','personal_references', 'rental_history', 'employment_income', 'credit_check', 'criminal_security_background_check','nationality','status']
-
-    
-
-
-    
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
 
     
+

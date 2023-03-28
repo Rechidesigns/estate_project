@@ -75,6 +75,12 @@ urlpatterns += [
     path("properties/", include("properties.api.urls")),
     # Locational URLs
     path("locations/", include("locations.api.urls")),
+
+    # Locational URLs
+    # path("landlord/", include("landlord.api.urls")),
+
+    # Locational URLs
+    # path("kyc/", include("kyc.api.urls")),
     # Inmessage Urls
     path("messages/", include("inmessages.api.urls")),
     # tenants urls

@@ -4,14 +4,16 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.generics import  CreateAPIView, ListCreateAPIView , ListAPIView
 from rest_framework.exceptions import NotFound, PermissionDenied
-from .serializers import Property_Serializer,Comment_Serializer, Property_Type_Serializer , Appliances_Serializer, Parking_Type_Serializer, Utilities_Serializer,OutDoor_Spaces_Serializer,Other_Amenities_Serializer , List_Property_Serializer
+
+from .serializers import Property_Serializer,Comment_Serializer, Property_Type_Serializer ,  Parking_Type_Serializer, Utilities_Serializer,OutDoor_Spaces_Serializer,Other_Amenities_Serializer , List_Property_Serializer
+
 from django.http import Http404
 # import get_object_or_404()
 from rest_framework import permissions, filters
 from estate_project.users.models import User
 from estate_project.users.api.serializers import UserSerializer
 from django.shortcuts import get_object_or_404
-from properties.models import Properties, Comments, Other_Amenities , OutDoor_Spaces , Utilities , Parking_Type , Property_Type, Appliances
+from properties.models import Properties, Comments, Other_Amenities , OutDoor_Spaces , Utilities , Parking_Type , Property_Type
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 
@@ -32,7 +34,7 @@ class Property_Options_ViewSet ( ListAPIView ):
         utilities = Utilities.objects.filter(active = True )
         outDoor_spaces = OutDoor_Spaces.objects.filter(active = True )
         other_amenities = Other_Amenities.objects.filter(active = True )
-        appliances = Appliances.objects.filter(active = True )
+        # appliances = Appliances.objects.filter(active = True )
 
         # serialization 
         property_type_serializer = Property_Type_Serializer(property_type , many=True)
@@ -40,7 +42,7 @@ class Property_Options_ViewSet ( ListAPIView ):
         utilities_serializer = Utilities_Serializer(utilities , many=True)
         outDoor_spaces_serializer = OutDoor_Spaces_Serializer( outDoor_spaces , many=True)
         other_amenities_serilizer = Other_Amenities_Serializer( other_amenities , many=True )
-        appliances_serializer = Appliances_Serializer(appliances, many=True)
+        # appliances_serializer = Appliances_Serializer(appliances, many=True)
 
         data = {
             'property_type':property_type_serializer.data ,
@@ -48,7 +50,7 @@ class Property_Options_ViewSet ( ListAPIView ):
             'utilities':utilities_serializer.data,
             'outDoor_spaces':outDoor_spaces_serializer.data,
             'other_amenities':other_amenities_serilizer.data,
-            'appliances':appliances_serializer.data,
+            # 'appliances':appliances_serializer.data,
             }
 
         return Response( {'status':'successful', 'message':'this consists of all the property option type that is available on the database' , 'data':data }, status = status.HTTP_200_OK)
@@ -69,7 +71,7 @@ class Properties_View ( ListCreateAPIView  ):
     def post ( self, request , *args, **kwargs ):
         serializer = self.serializer_class( data = request.data )
         if serializer.is_valid ():
-            serializer.save( Landlord = request.user ) #Landlord = request.user
+            serializer.save( landlord = self.request.user ) #Landlord = request.user
             return Response( {'status':'successful', 'message':'property has been uploaded successful','data':serializer.data} , status = status.HTTP_201_CREATED )
 
         return Response(serializer.error_messages, status = status.HTTP_400_BAD_REQUEST)

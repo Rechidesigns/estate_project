@@ -106,6 +106,7 @@ THIRD_PARTY_APPS = [
     "drf_yasg",
     "rest_framework_simplejwt",
     "django_filters",
+    'django_rest_passwordreset',
 ]
 
 LOCAL_APPS = [
@@ -116,6 +117,7 @@ LOCAL_APPS = [
     "inmessages.apps.InmessagesConfig",
     "tenants.apps.TenantsConfig",
     "kyc.apps.KycConfig",
+    "landlord.apps.LandlordConfig",
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -255,6 +257,8 @@ EMAIL_BACKEND = env(
     "DJANGO_EMAIL_BACKEND",
     default="django.core.mail.backends.smtp.EmailBackend",
 )
+
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
 
@@ -315,6 +319,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 ACCOUNT_UNIQUE_EMAIL = True
+
 
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "none"

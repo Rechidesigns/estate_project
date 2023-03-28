@@ -14,11 +14,15 @@ GENDER_CHOICES = (
 
 class Kyc ( BaseModel ):
 
-    # user_id = models.CharField(
-    #     max_length= 200,
+    # user_detail = models.ForeignKey(
+    #     User,
+    #     on_delete=models.CASCADE,
+    #     verbose_name= _("User_detail"),
+    #     related_name= "user_detail",
     #     null = True,
-    #     )
-    
+    #     help_text=_(' this provides the sender who is sendin the message')
+    # )
+
     first_name = models.CharField(
         max_length= 200,
         verbose_name= _("First Name"),
