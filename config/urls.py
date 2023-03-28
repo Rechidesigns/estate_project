@@ -77,6 +77,12 @@ urlpatterns += [
     path("locations/", include("locations.api.urls")),
 
     # Locational URLs
+    path("Change Password/", include("Change_password.api.urls")),
+
+    # Locational URLs
+    # path("OTP Notification/", include("OTP_Notifications.api.urls")),
+
+    # Locational URLs
     # path("landlord/", include("landlord.api.urls")),
 
     # Locational URLs

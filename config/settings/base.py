@@ -118,6 +118,8 @@ LOCAL_APPS = [
     "tenants.apps.TenantsConfig",
     "kyc.apps.KycConfig",
     "landlord.apps.LandlordConfig",
+    "Change_password.apps.ChangePasswordConfig",
+    "OTP_Notifications.apps.OtpNotificationsConfig",
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
