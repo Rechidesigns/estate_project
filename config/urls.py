@@ -80,7 +80,7 @@ urlpatterns += [
     path("Change Password/", include("Change_password.api.urls")),
 
     # Locational URLs
-    # path("OTP Notification/", include("OTP_Notifications.api.urls")),
+    path("OTP Notifications/", include("OTP_Notifications.api.urls")),
 
     # Locational URLs
     # path("landlord/", include("landlord.api.urls")),
