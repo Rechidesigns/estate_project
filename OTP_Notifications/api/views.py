@@ -13,7 +13,7 @@ def otp_pin_generator():
     return ''.join(random.choices(string.digits, k=6))
 
 
-class OTP_View( CreateAPIView ):
+class OTP_View ( CreateAPIView ):
     permission_classes = [ AllowAny, ]
     serializer_class = OTP_NotificationsSerializer
     queryset = OTP.objects.all()

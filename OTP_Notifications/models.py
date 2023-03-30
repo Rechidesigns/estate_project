@@ -38,6 +38,6 @@ class OTP(models.Model):
         return str(self.email)
     
     def save(self, *args, **kwargs):
-        self.pin_duration += timedelta(minutes = 10)
+        self.pin_duration += timedelta(minutes = 5)
         super(OTP, self).save(*args, **kwargs)
 
