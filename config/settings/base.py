@@ -107,6 +107,7 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt",
     "django_filters",
     'django_rest_passwordreset',
+    'knox',
 
 
 ]
@@ -122,6 +123,7 @@ LOCAL_APPS = [
     "landlord.apps.LandlordConfig",
     "Change_password.apps.ChangePasswordConfig",
     "OTP_Notifications.apps.OtpNotificationsConfig",
+    "login_logout.apps.LoginLogoutConfig",
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -344,6 +346,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
+        'knox.auth.TokenAuthentication',
     ),
 
 

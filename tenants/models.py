@@ -46,6 +46,14 @@ class Tenant( BaseModel ):
         help_text= _("Properties assigned to a tenant."),
     )
 
+    family_size = models.CharField(
+        max_length= 100,
+        verbose_name= _("Family Size"),
+        null= True,
+        blank= True,
+        help_text= _("The size of the family of the tenant."),
+    )
+
     action = models.CharField(
         choices= PROPERTY_ACTION,
         verbose_name= _("Action"),

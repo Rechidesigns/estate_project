@@ -26,7 +26,7 @@ class None_Rented_Properties (serializers.ModelSerializer):
 
     class Meta:
         model = Tenant
-        fields = ['id','landlord', 'properties','notification','status', 'action_date', 'created_date']
+        fields = ['id','landlord', 'properties', 'family_size', 'notification','status', 'action_date', 'created_date']
 
 
 
