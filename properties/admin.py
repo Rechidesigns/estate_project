@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import Properties , Other_Amenities , OutDoor_Spaces , Utilities , Parking_Type , Property_Type, Appliances
-from .models import Comments
+
 # Register your models here.
 
 @admin.register( Properties )
@@ -46,7 +46,4 @@ class AppliancesAdmin (admin.ModelAdmin):
     list_display_links = ('option', 'active')
 
 
-@admin.register( Comments )
-class CommentsAdmin (admin.ModelAdmin):
-    list_display = ('property','comment', 'active') 
-    list_display_links = ('property', 'active')
+

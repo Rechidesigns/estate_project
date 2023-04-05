@@ -272,6 +272,12 @@ class Properties (BaseModel):
         help_text=_(""" Outdoor space means a patio or deck, whether covered or uncovered, a yard, a walkway, or a parking lot, or a portion of any such space, that is located on or adjacent to the business premises, which space is owned, leased, or otherwise in the lawful control of the owner or operator of the business premises.. """)
     )
 
+    appliances = models.ManyToManyField(
+        Appliances, 
+        verbose_name = _('Appliances'),
+        help_text=_(""" Appliances are device or piece of equipment designed to perform a specific task. electrical and gas appliances" """)
+    )
+
     other_amenities = models.ManyToManyField(
         Other_Amenities, 
         verbose_name = _('Other Amenities '),
@@ -348,48 +354,6 @@ class PropertyImage(BaseModel):
     #         resized_img.save(self.image.path)
 
 
-
-class Comments(models.Model):
-
-    user = models.ForeignKey(
-        User,
-        on_delete= models.CASCADE,
-        verbose_name = _("Commenter"),
-        related_name= "UserComments",
-        null= True,
-        help_text= _("This profile belongs to the commenter")
-    )
-
-    property = models.ForeignKey(
-        Properties,
-        on_delete= models.CASCADE,
-        verbose_name= _("Property Comment"),
-        null= True,
-        help_text= _("This property has been commented on.")
-    )
-
-    comment = models.TextField(
-        verbose_name= _("Comment"),
-        null = True,
-        blank = True,
-        help_text= _("This comment is made for the property")
-    )
-
-    active = models.BooleanField(
-        verbose_name=_("Active"),
-        default=False,
-        null=True,
-        blank=True,
-        help_text=_(" this indicates if the active option type is enabled or not ")
-    )
-
-
-    def __str__(self):
-        return str(self.comment)
-
-    class Meta:
-        verbose_name = _('All Property Comments')
-        verbose_name_plural = _('All Properties Comments')
 
 
 

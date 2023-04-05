@@ -19,12 +19,12 @@ ID_CHOICES = (
 )
 
 PROOF_OF_ADDRESS_CHOICES = (
-    ("ELECTRICITY_BILL", "MALE"),
-    ("GAS_BILL", "FEMALE"),
-    ("WATER_BILL", "FEMALE"),
-    ("SEWER_BILL", "FEMALE"),
-    ("RECYCLING_BILL", "FEMALE"),
-    ("RECYCLING_BILL", "FEMALE")
+    ("ELECTRICITY_BILL", "ELECTRICITY BILL"),
+    ("GAS_BILL", "GAS BILL"),
+    ("WATER_BILL", "WATER BILL"),
+    ("SEWER_BILL", "SEWER  BILL"),
+    ("RECYCLING_BILL", "RECYCLING BILL"),
+    ("TV_CABLE_BILL", "TV / CABLE BILL"),
 )
 
 
@@ -36,7 +36,7 @@ class Kyc ( BaseModel ):
         on_delete=models.CASCADE,
         verbose_name= _("User_detail"),
         null = True,
-        help_text=_(' this provides the sender who is sendin the message')
+        help_text=_(' this provides the sender who is sending the message')
     )
 
     legal_first_name = models.CharField(
@@ -57,7 +57,7 @@ class Kyc ( BaseModel ):
 
     address_line_1 = models.CharField(
         max_length= 300,
-        verbose_name= _("Address"),
+        verbose_name= _("Address Line 1"),
         null= True,
         blank= True,
         help_text= _("Address of the user."),
@@ -65,7 +65,7 @@ class Kyc ( BaseModel ):
 
     address_line_2 = models.CharField(
         max_length= 300,
-        verbose_name= _("Address"),
+        verbose_name= _("Address Line 2"),
         null= True,
         blank= True,
         help_text= _("Address of the user."),
@@ -73,7 +73,7 @@ class Kyc ( BaseModel ):
 
     state = models.CharField(
         max_length= 250,
-        verbose_name= _("Address"),
+        verbose_name= _("State or Province where the user stays."),
         null= True,
         blank= True,
         help_text= _("State or province the user stays."),
@@ -81,7 +81,7 @@ class Kyc ( BaseModel ):
 
     zip_code = models.CharField(
         max_length= 100,
-        verbose_name= _("Address"),
+        verbose_name= _("ZIP Code or Postal code of the user."),
         null= True,
         blank= True,
         help_text= _("Zip or Postal code of the users address."),
@@ -89,7 +89,23 @@ class Kyc ( BaseModel ):
 
     city = models.CharField(
         max_length= 250,
-        verbose_name= _("Address"),
+        verbose_name= _("City or Town where the user stays."),
+        null= True,
+        blank= True,
+        help_text= _("The city which the user resides."),
+    )
+
+    phone_number_1 = models.CharField(
+        max_length= 100,
+        verbose_name= _("Phone number 1 of the user including country code."),
+        null= True,
+        blank= True,
+        help_text= _("The city which the user resides."),
+    )
+
+    phone_number_2 = models.CharField(
+        max_length= 100,
+        verbose_name= _("Phone number 2 of the user including country code."),
         null= True,
         blank= True,
         help_text= _("The city which the user resides."),
@@ -112,7 +128,7 @@ class Kyc ( BaseModel ):
 
     gender = models.CharField(
         max_length=50, 
-        verbose_name= _("gender"),
+        verbose_name= _("Gender"),
         choices=GENDER_CHOICES, 
         blank=True, 
         null=True,
@@ -182,7 +198,7 @@ class Kyc ( BaseModel ):
     )
     
     second_nationality = models.CharField(
-        verbose_name= _("Nationality"),
+        verbose_name= _(" Second Nationality"),
         max_length = 250,
         blank=True,
         null=True,
@@ -224,7 +240,7 @@ class Kyc ( BaseModel ):
     )
 
     def __str__(self):
-        return f"{self.legal_first_name} {self.legal_last_name} ({self.user_detail})"
+        return str(self.user_detail)
     
     class Meta:
         verbose_name = _("User KYC")

@@ -101,25 +101,6 @@ class Rent_Property_View( APIView ):
 
 
 
-# class Applicant_Information_Views(ListCreateAPIView):
-#     permission_classes = [IsAuthenticated]
-#     serializer_class = Applicant_Information_Details
-
-#     def post(self, request, *args, **kwargs):
-#         serializer = self.serializer_class(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save( )
-#             return Response({'status': 'successful', 'message': 'applicant information has been uploaded successfully', 'data': serializer.data}, status=status.HTTP_201_CREATED)
-
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-#     def get ( self, request , *args, **kwargs ):
-#         qs = Applicant_Information.objects.all()
-#         serializer = Applicant_Information_Details(qs , many = True)
-#         return Response( {'status':'successful', 'message':'applicant information has been fetched','data':serializer.data } , status=status.HTTP_201_CREATED )
-
 
 
 

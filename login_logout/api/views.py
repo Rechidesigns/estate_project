@@ -1,26 +1,17 @@
+import json
+from jsonschema import ValidationError
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from estate_project.users.models import User
 from estate_project.users.api.serializers import UserSerializer
-from .serializers import  LoginSerializer
 from knox import views as knox_views
 from django.contrib.auth import login
 from django.contrib.auth import get_user_model
-
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
-from rest_framework import status
-from django.contrib.auth import authenticate
-
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate, login, logout
+from .serializers import LoginSerializer, LogoutSerializer
 
 
 # User = get_user_model()
@@ -45,27 +36,38 @@ from rest_framework.authtoken.models import Token
 
 
 
+
 class LoginView(APIView):
+    permission_classes = (AllowAny, )
+    serializer_class = LoginSerializer
+
     def post(self, request):
-        serializer = LoginSerializer(data=request.data)
-        if serializer.is_valid():
-            user = authenticate(
-                email=serializer.validated_data['email'], # Use the email field instead of username
-                password=serializer.validated_data['password']
-            )
-            if user:
-                token, _ = Token.objects.get_or_create(user=user)
-                return Response({'token': token.key})
-            else:
-                return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        email = serializer.validated_data['email']
+        password = serializer.validated_data['password']
+
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            refresh = RefreshToken.for_user(user)
+            return Response({'refresh': str(refresh), 'access': str(refresh.access_token)})
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
 
 
 class LogoutView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    serializer_class = LogoutSerializer
+    permission_classes = (AllowAny, )
 
     def post(self, request):
-        Token.objects.filter(user=request.user).delete()
-        return Response({'message': 'Successfully logged out'})
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        logout(request)
+
+        return Response({'detail': 'Successfully logged out'})

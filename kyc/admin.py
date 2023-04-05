@@ -5,3 +5,5 @@ from .models import Kyc
 @admin.register(Kyc)
 class KycApplication( admin.ModelAdmin):
     pass
+    # def has_add_permission(self, request):
+    #     return False

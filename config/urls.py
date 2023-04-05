@@ -84,11 +84,13 @@ urlpatterns += [
 
     path("Login Logout/", include("login_logout.api.urls")),
 
+    path("Comments/", include("comments.api.urls")),
+
     # Locational URLs
     # path("landlord/", include("landlord.api.urls")),
 
     # Locational URLs
-    # path("kyc/", include("kyc.api.urls")),
+    path("kyc/", include("kyc.api.urls")),
     # Inmessage Urls
     path("messages/", include("inmessages.api.urls")),
     # tenants urls
