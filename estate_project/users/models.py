@@ -22,7 +22,7 @@ class UserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
-        user.send_otp()
+        # user.send_otp()
         return user
 
     def create_user(self, email, password=None, **extra_fields):

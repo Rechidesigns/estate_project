@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from estate_project.users.models import User
 from estate_project.users.api.serializers import UserSerializer
-from knox import views as knox_views
+# from knox import views as knox_views
 from django.contrib.auth import login
 from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
