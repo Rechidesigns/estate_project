@@ -57,23 +57,23 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'estate_database',
-        'USER': 'postgres',
-        'PASSWORD': 'Alexwhite96',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'estate_database',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Alexwhite96',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
@@ -133,6 +133,7 @@ LOCAL_APPS = [
     "OTP_Notifications.apps.OtpNotificationsConfig",
     "login_logout.apps.LoginLogoutConfig",
     "comments.apps.CommentsConfig",
+    "maintenance.apps.MaintenanceConfig",
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

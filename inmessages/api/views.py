@@ -8,6 +8,11 @@ from django.core.mail import send_mail
 from estate_project.users.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+
+
+
 
 class All_messages_View(APIView):
 
@@ -22,48 +27,60 @@ class All_messages_View(APIView):
 
 
 
-class Send_Message_View ( CreateAPIView ):
+# class Send_Message_View ( CreateAPIView ):
+#     permission_classes = [ IsAuthenticated, ]
+#     serializer_class = Message_Serializer
+
+#     def post (self, request , *args, **kwargs ):
+#         serializer = self.serializer_class( data = request.data )
+
+#         if serializer.is_valid():
+#             serializer.save( )
+
+            
+#             # return response
+#             return Response( {'status':'successful', 'message':'message sent successful', 'data':serializer.data } , status = status.HTTP_201_CREATED )
+
+#         return Response( {'status':'error', 'message':'check your input and try again',} , status = status.HTTP_400_BAD_REQUEST )
+
+
+
+
+
+
+
+class Send_Message_View(CreateAPIView):
     permission_classes = [ IsAuthenticated, ]
     serializer_class = Message_Serializer
 
-    def post (self, request , *args, **kwargs ):
-        serializer = self.serializer_class( data = request.data )
+    def post(self, request, **kwargs):
 
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            # return response
-            return Response( {'status':'successful', 'message':'message sent successful', 'data':serializer.data } , status = status.HTTP_201_CREATED )
+            recipient_email = serializer.validated_data.get('recipient_email')
+            try:
+                recipient_info = User.objects.get( email = recipient_email )
+            except User.DoesNotExist:
+                return Response({'status': 'error', 'message': 'Invalid or non-existent recipient email address'},status=status.HTTP_400_BAD_REQUEST)
+            
+            subject = 'Message notifications'
+            content = 'Dear user, kindly loging your rechi site you have a message'
 
-        return Response( {'status':'error', 'message':'check your input and try again',} , status = status.HTTP_400_BAD_REQUEST )
+            serializer.save( sender = self.request.user, recipients = recipient_info, active = True, subject_heading = subject, message_content = content )
+
+            # Send email
+            send_mail(
+                f'{subject}',
+                f'{content}',
+                request.sender.email,
+                [recipient_info.email],
+                fail_silently=False,
+            )
+    
+            return Response({'status': 'successful', 'message': 'message sent successfully'}, status=status.HTTP_200_OK)
+        
+        else:
+            return Response({'status': 'error', 'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
-
-#     def post(self, request, **kwargs):
-#         try:
-#             print(request.data)
-#             email = request.data.get('email')
-#             recipients = User.objects.get(email=email)
-#         except User.DoesNotExist:
-#             return Response({'status': 'error', 'message': 'User does not exist'}, status=status.HTTP_400_BAD_REQUEST)
-
-#         serializer = self.serializer_class(data=request.data)
-#         if serializer.is_valid():
-
-#             serializer.save(
-#                 sender = request.user,
-#                 recipients=recipients,
-#                 active=True
-#                 )
-
-#             send_mail(
-#                 'Property Rent Notification',
-#                 f'Hey {recipients.email}, kindly check your rechi property account, you have a new message',
-#                 request.user.email,
-#                 [recipients.email],
-#                 fail_silently=False,
-#             )
-
-#             return Response({'status': 'successful', 'message': 'message sent successful'}, status=status.HTTP_200_OK)
-#         else:
-#             return Response({'status': 'error', 'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

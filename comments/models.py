@@ -22,7 +22,7 @@ class Comments(models.Model):
 
     date_time = models.DateTimeField(
         verbose_name=_("Date & Time"),
-        auto_now_add= timezone.now(),
+        auto_now_add= True,
         null=True,
         blank=True,
         help_text=_(" This holds time and the date the comment was made.")

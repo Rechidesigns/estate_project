@@ -11,10 +11,11 @@ from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate, login, logout
-from .serializers import LoginSerializer, LogoutSerializer
+from login_logout.api.serializers import LoginSerializer, LogoutSerializer
 
 
-# User = get_user_model()
+
+User = get_user_model()
 
 
 
@@ -56,6 +57,7 @@ class LoginView(APIView):
             return Response({'refresh': str(refresh), 'access': str(refresh.access_token)})
         else:
             return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 
 

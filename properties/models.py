@@ -284,7 +284,6 @@ class Properties (BaseModel):
         help_text=_(""" Amenities are things such as stores or sports facilities that are provided for people's convenience, enjoyment, or comfort.  """)
     )
 
-
     properties_image = models.ImageField(
         verbose_name = _('Property Image'),
         upload_to = "photos/properties_image",

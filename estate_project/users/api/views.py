@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny , IsAuthenticated
 from django.shortcuts import get_object_or_404
 from .serializers import Account_Creation
 from rest_framework import status
+from estate_project.users.api.serializers import UserSerializer
 
 
 
@@ -41,6 +42,4 @@ class Register_Account ( CreateAPIView ) :
     
     # # Return the tenants to the template
     #     return render(request, 'your_template.html', {'tenants': tenants})
-
-
 

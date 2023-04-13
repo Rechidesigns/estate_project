@@ -74,5 +74,3 @@ class Account_Creation (  serializers.ModelSerializer ):
         user.save()
 
 
-
-

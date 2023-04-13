@@ -16,19 +16,32 @@ class Kyc_View ( CreateAPIView ):
     serializer_class = Kyc_Serializer
 
 
-    def post (self, request , *args, **kwargs ):  
+
+    def post ( self, request , *args, **kwargs ):
+
         serializer = self.serializer_class( data = request.data )
 
-        if serializer.is_valid( raise_exception=True ):
-            user = User.objects.get( user_detail = request.user )
-            try:
-                obj = Kyc.objects.get( user_detail = request.user )
-                return Response({ "status": "faild", "message":"User already submited KYC"}, status=400)
-            except Kyc.DoesNotExist:
-                serializer.save( user_detail = request.user )
-                return Response( {'status':'successful', 'message':'KYC sent for review successfully', 'data':serializer.data } , status = status.HTTP_201_CREATED )
+        if serializer.is_valid ():
+            serializer.save()
 
-        return Response( {'status':'error', 'message':'check your input and try again',} , status = status.HTTP_400_BAD_REQUEST )
+            return Response({'status':'successful', 'message':'KYC has been uploaded successful','data':serializer.data} , status = status.HTTP_201_CREATED )
+
+        return Response(serializer.error_messages, status = status.HTTP_400_BAD_REQUEST)
+
+
+    # def post (self, request , *args, **kwargs ):  
+    #     serializer = self.serializer_class( data = request.data )
+
+    #     if serializer.is_valid( raise_exception=True ):
+    #         user = User.objects.get( user_detail = request.user )
+    #         try:
+    #             obj = Kyc.objects.get( user_detail = request.user )
+    #             return Response({ "status": "faild", "message":"User already submited KYC"}, status=400)
+    #         except Kyc.DoesNotExist:
+    #             serializer.save( user_detail = request.user )
+    #             return Response( {'status':'successful', 'message':'KYC sent for review successfully', 'data':serializer.data } , status = status.HTTP_201_CREATED )
+
+    #     return Response( {'status':'error', 'message':'check your input and try again',} , status = status.HTTP_400_BAD_REQUEST )
 
 
     def get ( self, request , *args, **kwargs ):

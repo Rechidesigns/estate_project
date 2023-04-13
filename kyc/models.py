@@ -2,13 +2,13 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from helpers.common.basemodel import BaseModel
 from estate_project.users.models import User
-from django.utils import timezone
-from estate_project.users.models import User
+from locations.models import Country, State
 
 GENDER_CHOICES = (
     ("MALE", "MALE"),
     ("FEMALE", "FEMALE")
 )
+
 
 
 ID_CHOICES = (
@@ -71,11 +71,19 @@ class Kyc ( BaseModel ):
         help_text= _("Address of the user."),
     )
 
-    state = models.CharField(
-        max_length= 250,
+    country = models.ForeignKey(
+        Country,
+        on_delete=models.CASCADE,
+        verbose_name= _("This holds the country where the user stays."),
+        null= True,
+        help_text= _("Country where the user stays."),
+    )
+
+    state = models.ForeignKey(
+        State,
+        on_delete=models.CASCADE,
         verbose_name= _("State or Province where the user stays."),
         null= True,
-        blank= True,
         help_text= _("State or province the user stays."),
     )
 
@@ -224,7 +232,7 @@ class Kyc ( BaseModel ):
     )
 
     created_date = models.DateTimeField(
-        default= timezone.now,
+        auto_now_add= True,
         editable= False,
         max_length= 20,
         verbose_name= _("Date and Time"),
