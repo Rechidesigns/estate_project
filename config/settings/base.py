@@ -90,6 +90,9 @@ LOCAL_APPS = [
     "properties.apps.PropertiesConfig",
     "locations.apps.LocationsConfig",
     "OTP_Notifications.apps.OtpNotificationsConfig",
+    "kyc.apps.KycConfig",
+    "inmessages.apps.InmessagesConfig",
+
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -289,6 +292,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
@@ -307,6 +311,10 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+# Recuity settings for permissions
+RECUITY_AUTH = True
+RECUITY_AUTH_KEYS = "RECHI_KEY_434U38RHFNHRU349FN43UHTF34ROFN3H49FVBBVRUER"
 
 
 JAZZMIN_SETTINGS = {

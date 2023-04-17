@@ -13,6 +13,8 @@ from recuity.users.api.serializers import UserSerializer
 from django.shortcuts import get_object_or_404
 from properties.models import Properties, Other_Amenities , OutDoor_Spaces , Utilities , Parking_Type , Property_Type, Appliances
 from rest_framework.filters import SearchFilter
+from helpers.common.security import RecuityPermission , RecuityMerchantPermission , RecuityTenantPermission
+
 
 
 
@@ -54,7 +56,7 @@ class Property_Options_ViewSet ( ListAPIView ):
 
 class Properties_View ( ListCreateAPIView  ):
     
-    permission_classes = [ IsAuthenticated ]
+    permission_classes = [ IsAuthenticated , RecuityPermission , RecuityMerchantPermission ]
     # queryset = Properties.objects.all()
     serializer_class = Property_Serializer
     # filter_backends = [DjangoFilterBackend, filters.SearchFilter]
@@ -105,7 +107,7 @@ class Property_Detail_View( APIView ):
         return Response({'status':'fail'},serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-    def delete(self, request, p_id, format=None):
+    def delete(self, p_id ):
         property = self.get_object( p_id )
         property.delete()
         return Response({'status':'successful','message':'the property has been deleted successful','data':[] }, status = status.HTTP_200_OK )
