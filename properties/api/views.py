@@ -67,6 +67,7 @@ class Properties_View ( ListCreateAPIView  ):
     def post ( self, request , *args, **kwargs ):
         serializer = self.serializer_class( data = request.data )
         if serializer.is_valid ():
+            
             serializer.save( landlord = self.request.user ) #Landlord = request.user
             return Response( {'status':'successful', 'message':'property has been uploaded successful','data':serializer.data} , status = status.HTTP_201_CREATED )
 
@@ -74,7 +75,7 @@ class Properties_View ( ListCreateAPIView  ):
 
 
     def get ( self, request , *args, **kwargs ):
-        qs = Properties.objects.filter( )
+        qs = Properties.objects.filter()
         serializer = List_Property_Serializer(qs , many = True)
         return Response( {'status':'successful', 'message':'landlord properties has been fetched','data':serializer.data } , status=status.HTTP_201_CREATED )
 

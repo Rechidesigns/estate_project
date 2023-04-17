@@ -1,12 +1,9 @@
-from rest_framework.response import Response
-from rest_framework import status
+# import from DRF packages 
 from rest_framework.permissions import BasePermission
 from rest_framework.exceptions import APIException
-
-
-from secrets import compare_digest
+# import from django packages
 from django.conf import settings
-
+# import from custom app 
 from recuity.users.models import User
 
 
@@ -37,6 +34,10 @@ class MerchantAccessDenied(APIException):
 
 
 class RecuityPermission(BasePermission):
+    """
+    this is permission can be used to protect the endpoints 
+    which is customized by the developer
+    """
 
     def has_permission(self, request, *args, **kwargs):
         # Checking if the KOK auth is been authorized
@@ -55,7 +56,10 @@ class RecuityPermission(BasePermission):
 
 
 class RecuityMerchantPermission (BasePermission):
-
+    """
+    this is permission can be used to protect the endpoints 
+    meant only for recuity merchants accounts 
+    """
     def has_permission(self, request, *args, **kwargs):
         # this hold the permission for user account
         # to verify if the user is a merchant user or not
@@ -69,7 +73,10 @@ class RecuityMerchantPermission (BasePermission):
 
 
 class RecuityTenantPermission (BasePermission):
-
+    """
+    this is permission can be used to protect the endpoints 
+    meant only for recuity tenants accounts 
+    """
     def has_permission(self, request, *args, **kwargs):
         # this hold the permission for user account
         # to verify if the user is a Tenant user or not
@@ -79,6 +86,8 @@ class RecuityTenantPermission (BasePermission):
         except User.DoesNotExist:
             raise MerchantAccessDenied()
         return user_account_type
+    
+
 
 
 

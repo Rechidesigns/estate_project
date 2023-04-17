@@ -2,6 +2,8 @@
 Base settings to build other settings files upon.
 """
 from pathlib import Path
+from datetime import timedelta
+
 
 import environ
 
@@ -316,6 +318,19 @@ SPECTACULAR_SETTINGS = {
 RECUITY_AUTH = True
 RECUITY_AUTH_KEYS = "RECHI_KEY_434U38RHFNHRU349FN43UHTF34ROFN3H49FVBBVRUER"
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'HS256',
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+   
+}
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
