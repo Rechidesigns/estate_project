@@ -52,6 +52,7 @@ class RecuityPermission(BasePermission):
         else:
             given_token = None
             return given_token == None
+            # raise SignatureHeaderMissing()
 
 
 

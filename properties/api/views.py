@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework.generics import  CreateAPIView, ListCreateAPIView , ListAPIView
+from rest_framework.generics import  RetrieveUpdateDestroyAPIView, ListCreateAPIView , ListAPIView
 from rest_framework.exceptions import NotFound, PermissionDenied
 from .serializers import Property_Serializer, Appliances_Serializer, Property_Type_Serializer ,  Parking_Type_Serializer, Utilities_Serializer,OutDoor_Spaces_Serializer,Other_Amenities_Serializer , List_Property_Serializer
 from django.http import Http404
@@ -67,60 +67,39 @@ class Properties_View ( ListCreateAPIView  ):
     def post ( self, request , *args, **kwargs ):
         serializer = self.serializer_class( data = request.data )
         if serializer.is_valid ():
-            
             serializer.save( landlord = self.request.user ) #Landlord = request.user
             return Response( {'status':'successful', 'message':'property has been uploaded successful','data':serializer.data} , status = status.HTTP_201_CREATED )
 
-        return Response(serializer.error_messages, status = status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
     def get ( self, request , *args, **kwargs ):
         qs = Properties.objects.filter()
         serializer = List_Property_Serializer(qs , many = True)
         return Response( {'status':'successful', 'message':'landlord properties has been fetched','data':serializer.data } , status=status.HTTP_201_CREATED )
-
-
-
-class Property_Detail_View( APIView ): 
-
-    permission_classes = [ IsAuthenticated, ]
-    serializer_class = Property_Serializer
-    """
-    API view to handle PUT and DELETE requests for a single Property instance.
-    """
-    def get_object( self, property_id ):
-      
-        property = get_object_or_404 (Properties, id = property_id )
-        return property
-       
-
-    def get (self, request, p_id ):
-        property = self.get_object( p_id )        
-        serializer = self.serializer_class( property )
-        return Response({'status':'successful','message':'the detail information about the property','data':serializer.data }, status = status.HTTP_200_OK )
-
-    def put(self, request, p_id, format=None):
-        property = self.get_object( p_id )
-        serializer = Property_Serializer( property, data=request.data )
-        if serializer.is_valid():
-            serializer.save( )
-            return Response({'status':'successful', 'message':'the details of the property has been updated'}, status = status.HTTP_200_OK)
-        return Response({'status':'fail'},serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-    def delete(self, p_id ):
-        property = self.get_object( p_id )
-        property.delete()
-        return Response({'status':'successful','message':'the property has been deleted successful','data':[] }, status = status.HTTP_200_OK )
     
 
 
+
+
+class Property_Detail_View( RetrieveUpdateDestroyAPIView ): 
+
+    permission_classes = [ IsAuthenticated, RecuityPermission ]
+    serializer_class = Property_Serializer
+    queryset = Properties.objects.all()
+    lookup_field = "id"
+
+    
+
 # class LandlordAdminView( ListAPIView ):
 
-# class Properties_List(ListAPIView):
-#     queryset = Properties.objects.all()
-#     serializer_class = Property_Serializer
-#     filter_backends = [DjangoFilterBackend, SearchFilter]
-#     filter_fields = ['id','country','state','city','number_of_storeys','number_of_bedroom_and_bathroon',]
-#     search_fields = ['id','address_1','country','state','city','amount','number_of_unit', 'appliances', 'property_type','unit_number','number_of_storeys','number_of_bedroom_and_bathroon']
+class Properties_List( ListAPIView ):
+    permission_classes = [ AllowAny , RecuityPermission  ]
+    queryset = Properties.objects.all()
+    serializer_class = Property_Serializer
+
+    def get (self, request, *args, **kwargs):
+        serializer = self.serializer_class( self.get_queryset() , many = True )
+        return Response({'status':'successful','message':'all available properties are fetched successfully','data':serializer.data }, status = status.HTTP_200_OK )
+
 

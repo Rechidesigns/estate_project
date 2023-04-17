@@ -9,8 +9,6 @@ GENDER_CHOICES = (
     ("FEMALE", "FEMALE")
 )
 
-
-
 ID_CHOICES = (
     ("DRIVERS_LISCENSE", "DRIVERS_LISCENSE"),
     ("NATIONAL_IDENTIFICATION", "NATIONAL_IDENTIFICATION"),
@@ -29,7 +27,7 @@ PROOF_OF_ADDRESS_CHOICES = (
 
 
 
-class Kyc ( BaseModel ):
+class Kyc( BaseModel ):
 
     user_detail = models.ForeignKey(
         User,
@@ -229,14 +227,6 @@ class Kyc ( BaseModel ):
         blank = True,
         null = True,
         help_text = _(" Tenants drivers license")
-    )
-
-    created_date = models.DateTimeField(
-        auto_now_add= True,
-        editable= False,
-        max_length= 20,
-        verbose_name= _("Date and Time"),
-        help_text= _("Date and Time the user submited the KYC for verification")
     )
 
     status = models.BooleanField(

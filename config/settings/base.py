@@ -315,7 +315,7 @@ SPECTACULAR_SETTINGS = {
 # ------------------------------------------------------------------------------
 
 # Recuity settings for permissions
-RECUITY_AUTH = True
+RECUITY_AUTH = False
 RECUITY_AUTH_KEYS = "RECHI_KEY_434U38RHFNHRU349FN43UHTF34ROFN3H49FVBBVRUER"
 
 
