@@ -74,7 +74,7 @@ class Kyc ( BaseModel ):
     country = models.ForeignKey(
         Country,
         on_delete=models.CASCADE,
-        verbose_name= _("This holds the country where the user stays."),
+        verbose_name= _("Country"),
         null= True,
         help_text= _("Country where the user stays."),
     )
@@ -82,14 +82,14 @@ class Kyc ( BaseModel ):
     state = models.ForeignKey(
         State,
         on_delete=models.CASCADE,
-        verbose_name= _("State or Province where the user stays."),
+        verbose_name= _("State"),
         null= True,
         help_text= _("State or province the user stays."),
     )
 
     zip_code = models.CharField(
         max_length= 100,
-        verbose_name= _("ZIP Code or Postal code of the user."),
+        verbose_name= _("ZIP/Postal code"),
         null= True,
         blank= True,
         help_text= _("Zip or Postal code of the users address."),
@@ -97,7 +97,7 @@ class Kyc ( BaseModel ):
 
     city = models.CharField(
         max_length= 250,
-        verbose_name= _("City or Town where the user stays."),
+        verbose_name= _("City"),
         null= True,
         blank= True,
         help_text= _("The city which the user resides."),
@@ -105,7 +105,7 @@ class Kyc ( BaseModel ):
 
     phone_number_1 = models.CharField(
         max_length= 100,
-        verbose_name= _("Phone number 1 of the user including country code."),
+        verbose_name= _("Phone number 1"),
         null= True,
         blank= True,
         help_text= _("The city which the user resides."),
@@ -113,7 +113,7 @@ class Kyc ( BaseModel ):
 
     phone_number_2 = models.CharField(
         max_length= 100,
-        verbose_name= _("Phone number 2 of the user including country code."),
+        verbose_name= _("Phone number 2"),
         null= True,
         blank= True,
         help_text= _("The city which the user resides."),
@@ -154,7 +154,8 @@ class Kyc ( BaseModel ):
         upload_to="photo/kyc/",
         blank=True, 
         null=True, 
-        verbose_name= _("Holds the users profile image, probably a headshot photo.")
+        verbose_name= _("Profile Image"),
+        help_text= _("Holds the users profile image, probably a headshot photo.")
     )
 
     personal_references = models.CharField(
@@ -216,7 +217,7 @@ class Kyc ( BaseModel ):
     type_of_identification = models.CharField(
         max_length= 50,
         choices= ID_CHOICES,
-        verbose_name= _("Type of identification ID used"),
+        verbose_name= _("Type of ID"),
         null= True,
         blank= True,
         help_text= _("This holds the type of identification ID used")

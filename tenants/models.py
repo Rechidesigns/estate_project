@@ -28,14 +28,14 @@ class Tenant( BaseModel ):
         help_text=_(' this provides the sender who is sendin the message')
     )
 
-    landlord = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name= _("Landlord"),
-        related_name= "Landlord_properties",
-        null = True,
-        help_text=_(' this provides the recipients to which this message will be sent to')
-    )
+    # landlord = models.ForeignKey(
+    #     User,
+    #     on_delete=models.CASCADE,
+    #     verbose_name= _("Landlord"),
+    #     related_name= "Landlord_properties",
+    #     null = True,
+    #     help_text=_(' this provides the recipients to which this message will be sent to')
+    # )
 
     properties = models.ForeignKey(
         Properties,

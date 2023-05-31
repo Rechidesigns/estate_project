@@ -82,7 +82,7 @@ urlpatterns += [
     # Locational URLs
     path("OTP Notifications/", include("OTP_Notifications.api.urls")),
 
-    path("Login Logout/", include("login_logout.api.urls")),
+    # path("Login Logout/", include("login_logout.api.urls")),
 
     path("Comments/", include("comments.api.urls")),
 

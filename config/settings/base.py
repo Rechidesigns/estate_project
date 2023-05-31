@@ -57,16 +57,16 @@ DATABASES = {
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'estate_database',
-#         'USER': 'postgres',
-#         'PASSWORD': 'Alexwhite96',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'estate',
+        'USER': 'postgres',
+        'PASSWORD': 'Alexwhite96',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # DATABASES = {
 #     'default': {
@@ -132,7 +132,7 @@ LOCAL_APPS = [
     "landlord.apps.LandlordConfig",
     "Change_password.apps.ChangePasswordConfig",
     "OTP_Notifications.apps.OtpNotificationsConfig",
-    "login_logout.apps.LoginLogoutConfig",
+    # "login_logout.apps.LoginLogoutConfig",
     "comments.apps.CommentsConfig",
     "maintenance.apps.MaintenanceConfig",
 
